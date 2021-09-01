@@ -11,22 +11,24 @@ import com.android.volley.toolbox.JsonObjectRequest
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var madapter: NewsAdapter
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var madapter: NewsAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView : RecyclerView= findViewById(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        fetchData()
-        val madapter = NewsAdapter(this)
+        getNews()
+        madapter = NewsAdapter(this)
         recyclerView.adapter = madapter
 
 
     }
-    private fun fetchData()  {
-        val url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2caedae36fec433dae6171558bb76d4f"
+    private fun getNews()  {
+        val url = "https://saurav.tech/NewsAPI/top-headlines/category/general/in.json"
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET,
             url,

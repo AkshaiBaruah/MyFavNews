@@ -17,6 +17,8 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="ekrjrgberhbherkgjer" />
+        tools:text="ekrjrgberhbherkgjer"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
