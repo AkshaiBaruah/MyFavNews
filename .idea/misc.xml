@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/drawable/category_checked.xml" value="0.2703125" />
+        <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/drawable/category_toggle.xml" value="0.2703125" />
+        <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/drawable/category_unchecked.xml" value="0.2703125" />
+        <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/AndroidStudio trial projects/MyFavNews/app/src/main/res/layout/item_view.xml" value="0.2536231884057971" />
       </map>
     </option>

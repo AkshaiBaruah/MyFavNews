@@ -10,11 +10,101 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearButtons2" />
+
+    <LinearLayout
+        android:id="@+id/linearButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ToggleButton
+            android:id="@+id/GeneralBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/general"
+            android:textAllCaps="false"
+            android:textOff="@string/general"
+            android:textOn="@string/general"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ToggleButton
+            android:id="@+id/ScienceBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/science"
+            android:textAllCaps="false"
+            android:textOff="@string/science"
+            android:textOn="@string/science" />
+
+        <ToggleButton
+            android:id="@+id/TechnologyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/technology"
+            android:textAllCaps="false"
+            android:textOff="@string/technology"
+            android:textOn="@string/technology" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearButtons2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearButtons">
+
+        <ToggleButton
+            android:id="@+id/EntertainmentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/entertainment"
+            android:textAllCaps="false"
+            android:textOff="@string/entertainment"
+            android:textOn="@string/entertainment" />
+
+        <ToggleButton
+            android:id="@+id/SportsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/sports"
+            android:textAllCaps="false"
+            android:textOff="@string/sports"
+            android:textOn="@string/sports" />
+
+        <ToggleButton
+            android:id="@+id/HealthBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_toggle"
+            android:text="@string/health"
+            android:textAllCaps="false"
+            android:textOff="@string/health"
+            android:textOn="@string/health" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
