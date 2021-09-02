@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var madapter: NewsAdapter
-    private var category = "general"
+    private var category = "top"
+    private var query = "football"
 
 
 
@@ -91,27 +93,34 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             topBtn.isChecked = false
             getNews(category)
         }
+        val search_btn : SearchView = findViewById(R.id.search_bar)
+        search_btn.setOnClickListener {
 
+        }
 
 
 
     }
     private fun getNews(category : String)  {
-        val url = "https://saurav.tech/NewsAPI/top-headlines/category/$category/in.json"
+        val url = "https://newsdata.io/api/1/news?apikey=pub_1060d54a436d939125834ee6e4ec88557987&country=in&category=$category"
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET,
             url,
             null,
             {Response ->
-                val newsJsonArray = Response.getJSONArray("articles")
+                val newsJsonArray = Response.getJSONArray("results")
                 val newsArray = ArrayList<News>()
                 for ( i in 0 until newsJsonArray.length()){
+
                     val currentJsonObject = newsJsonArray.getJSONObject(i)
+                   if(currentJsonObject.getString("image_url") == "null"){
+                        continue
+                    }
                     val currentNews = News(
                         currentJsonObject.getString("title"),
-                        currentJsonObject.getString("author"),
-                        currentJsonObject.getString("url"),
-                        currentJsonObject.getString("urlToImage")
+                        currentJsonObject.getString("source_id"),
+                        currentJsonObject.getString("link"),
+                        currentJsonObject.getString("image_url")
                     )
 
                     newsArray.add(currentNews)
@@ -126,6 +135,40 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
         )
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
 
+    }
+    private fun searchNews(query : String){
+        val query_api = "https://newsdata.io/api/1/news?apikey=pub_1060d54a436d939125834ee6e4ec88557987&qInTitle=$query"
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET,
+            query_api,
+            null,
+            {Response ->
+                val newsJsonArray = Response.getJSONArray("results")
+                val newsArray = ArrayList<News>()
+                for ( i in 0 until newsJsonArray.length()){
+
+                    val currentJsonObject = newsJsonArray.getJSONObject(i)
+                    if(currentJsonObject.getString("image_url") == "null"){
+                        continue
+                    }
+                    val currentNews = News(
+                        currentJsonObject.getString("title"),
+                        currentJsonObject.getString("source_id"),
+                        currentJsonObject.getString("link"),
+                        currentJsonObject.getString("image_url")
+                    )
+
+                    newsArray.add(currentNews)
+                }
+                madapter.updateItems(newsArray)
+            },
+
+            {
+                Toast.makeText( this , "Oops something went wrong! :(" , Toast.LENGTH_SHORT).show()
+            }
+
+        )
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
     }
 
     override fun onItemClicked(item: News) {
