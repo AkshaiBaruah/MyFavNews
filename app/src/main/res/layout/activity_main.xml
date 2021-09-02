@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,29 +24,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ToggleButton
-            android:id="@+id/GeneralBtn"
+            android:id="@+id/TopBtn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/category_toggle"
-            android:text="@string/general"
+            android:text="@string/Top"
             android:textAllCaps="false"
-            android:textOff="@string/general"
-            android:textOn="@string/general"
+            android:textOff="@string/Top"
+            android:textOn="@string/Top"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ToggleButton
             android:id="@+id/ScienceBtn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:background="@drawable/category_toggle"
             android:text="@string/science"
@@ -89,6 +95,8 @@
             android:id="@+id/SportsBtn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@drawable/category_toggle"
             android:text="@string/sports"
@@ -107,4 +115,5 @@
             android:textOff="@string/health"
             android:textOn="@string/health" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

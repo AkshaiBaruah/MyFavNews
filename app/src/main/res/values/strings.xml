@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyFavNews</string>
-    <string name="general">General</string>
+    <string name="Top">Top</string>
     <string name="science">Science</string>
     <string name="technology">Technology</string>
     <string name="entertainment">Entertainment</string>

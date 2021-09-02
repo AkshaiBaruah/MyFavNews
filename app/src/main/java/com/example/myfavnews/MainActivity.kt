@@ -1,16 +1,17 @@
 package com.example.myfavnews
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsItemClicked {
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var madapter: NewsAdapter
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val generalBtn : ToggleButton = findViewById(R.id.GeneralBtn)
+        val topBtn : ToggleButton = findViewById(R.id.TopBtn)
         val scienceBtn : ToggleButton = findViewById(R.id.ScienceBtn)
         val technologyBtn : ToggleButton = findViewById(R.id.TechnologyBtn)
         val entertainmentBtn : ToggleButton = findViewById(R.id.EntertainmentBtn)
@@ -36,8 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         //handling clicking the categories.
 
-        generalBtn.setOnClickListener {
-            category = "general"
+        topBtn.setOnClickListener {
+            category = "top"
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
         scienceBtn.setOnClickListener {
             category = "science"
-            generalBtn.isChecked = false
+            topBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         technologyBtn.setOnClickListener {
             category = "technology"
             scienceBtn.isChecked = false
-            generalBtn.isChecked = false
+            topBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             category = "entertainment"
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
-            generalBtn.isChecked = false
+            topBtn.isChecked = false
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
-            generalBtn.isChecked = false
+            topBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
         }
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
-            generalBtn.isChecked = false
+            topBtn.isChecked = false
             getNews(category)
         }
 
@@ -126,5 +127,12 @@ class MainActivity : AppCompatActivity() {
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
 
     }
+
+    override fun onItemClicked(item: News) {
+        val builder =CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        customTabsIntent.launchUrl(this , Uri.parse(item.url))
+    }
+
 
 }
