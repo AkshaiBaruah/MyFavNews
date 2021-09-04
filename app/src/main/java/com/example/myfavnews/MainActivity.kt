@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
         scienceBtn.setOnClickListener {
             category = "science"
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
         technologyBtn.setOnClickListener {
             category = "technology"
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
         entertainmentBtn.setOnClickListener {
             category = "entertainment"
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
         sportsBtn.setOnClickListener {
             category = "sports"
@@ -87,6 +91,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             generalBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
         healthBtn.setOnClickListener {
             category = "health"
@@ -96,6 +101,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             sportsBtn.isChecked = false
             generalBtn.isChecked = false
             getNews(category)
+            recyclerView.scrollToPosition(0)
         }
 
         //implementing the search btn
