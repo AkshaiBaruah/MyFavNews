@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyFavNews</string>
+    <string name="app_name">News Reader</string>
     <string name="Top">Top</string>
     <string name="science">Science</string>
     <string name="technology">Technology</string>

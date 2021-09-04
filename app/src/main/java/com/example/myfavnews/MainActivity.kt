@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var madapter: NewsAdapter
-    private var category = "top"
+    private var category = "general"
     private var query = "football"
 
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val topBtn : ToggleButton = findViewById(R.id.TopBtn)
+        val generalBtn : ToggleButton = findViewById(R.id.TopBtn)
         val scienceBtn : ToggleButton = findViewById(R.id.ScienceBtn)
         val technologyBtn : ToggleButton = findViewById(R.id.TechnologyBtn)
         val entertainmentBtn : ToggleButton = findViewById(R.id.EntertainmentBtn)
@@ -33,14 +33,18 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        getNews(category)
+        var flag = true
+        if(flag){
+            firstNews()
+            flag = false
+        }
         madapter = NewsAdapter(this)
         recyclerView.adapter = madapter
 
         //handling clicking the categories.
 
-        topBtn.setOnClickListener {
-            category = "top"
+        generalBtn.setOnClickListener {
+            category = "general"
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
@@ -50,7 +54,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
         }
         scienceBtn.setOnClickListener {
             category = "science"
-            topBtn.isChecked = false
+            generalBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
@@ -60,7 +64,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
         technologyBtn.setOnClickListener {
             category = "technology"
             scienceBtn.isChecked = false
-            topBtn.isChecked = false
+            generalBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             category = "entertainment"
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
-            topBtn.isChecked = false
+            generalBtn.isChecked = false
             sportsBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
@@ -80,7 +84,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
-            topBtn.isChecked = false
+            generalBtn.isChecked = false
             healthBtn.isChecked = false
             getNews(category)
         }
@@ -90,22 +94,74 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
             sportsBtn.isChecked = false
-            topBtn.isChecked = false
+            generalBtn.isChecked = false
             getNews(category)
         }
-        val search_btn : SearchView = findViewById(R.id.search_bar)
-        search_btn.setOnClickListener {
 
-        }
+        //implementing the search btn
+        val search_btn : SearchView = findViewById(R.id.search_Btn)
 
+        search_btn.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                generalBtn.isChecked = false
+                scienceBtn.isChecked = false
+                technologyBtn.isChecked = false
+                entertainmentBtn.isChecked = false
+                sportsBtn.isChecked = false
+                healthBtn.isChecked = false
+                query = search_btn.query.toString()
+                searchNews(query)
+                search_btn.isIconified = true
+                search_btn.isIconified = true
+                return false
+            }
+            override fun onQueryTextChange(p0: String?): Boolean {
+                //Start filtering the list as user start entering the characters
+
+                return false
+            }
+        })
 
 
     }
     private fun getNews(category : String)  {
-        val url = "https://newsdata.io/api/1/news?apikey=pub_1060d54a436d939125834ee6e4ec88557987&country=in&category=$category"
+        val url = "https://saurav.tech/NewsAPI/top-headlines/category/$category/in.json"
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET,
             url,
+            null,
+            {Response ->
+                val newsJsonArray = Response.getJSONArray("articles")
+                val newsArray = ArrayList<News>()
+                for ( i in 0 until newsJsonArray.length()){
+
+                    val currentJsonObject = newsJsonArray.getJSONObject(i)
+                    val currentNews = News(
+                        currentJsonObject.getString("title"),
+                        currentJsonObject.getString("author"),
+                        currentJsonObject.getString("url"),
+                        currentJsonObject.getString("urlToImage")
+                    )
+
+                    newsArray.add(currentNews)
+                }
+                madapter.updateItems(newsArray)
+            },
+
+            {
+                Toast.makeText( this , "Oops something went wrong! :(" , Toast.LENGTH_SHORT).show()
+            }
+
+        )
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+
+    }
+    private fun searchNews(query : String){
+        val query_api = "https://newsdata.io/api/1/news?apikey=pub_1060d54a436d939125834ee6e4ec88557987&country=in&qInTitle=$query"
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET,
+            query_api,
             null,
             {Response ->
                 val newsJsonArray = Response.getJSONArray("results")
@@ -113,9 +169,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
                 for ( i in 0 until newsJsonArray.length()){
 
                     val currentJsonObject = newsJsonArray.getJSONObject(i)
-                   if(currentJsonObject.getString("image_url") == "null"){
-                        continue
-                    }
+
                     val currentNews = News(
                         currentJsonObject.getString("title"),
                         currentJsonObject.getString("source_id"),
@@ -134,30 +188,29 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
 
         )
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
-
     }
-    private fun searchNews(query : String){
-        val query_api = "https://newsdata.io/api/1/news?apikey=pub_1060d54a436d939125834ee6e4ec88557987&qInTitle=$query"
+    private fun firstNews(){
+        val first_api = "https://saurav.tech/NewsAPI/everything/bbc-news.json"
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET,
-            query_api,
+            first_api,
             null,
             {Response ->
-                val newsJsonArray = Response.getJSONArray("results")
+                val newsJsonArray = Response.getJSONArray("articles")
                 val newsArray = ArrayList<News>()
                 for ( i in 0 until newsJsonArray.length()){
 
                     val currentJsonObject = newsJsonArray.getJSONObject(i)
-                    if(currentJsonObject.getString("image_url") == "null"){
+                    if(currentJsonObject.getString("urlToImage") == "https://ichef.bbci.co.uk/images/ic/1200x675/p060dh18.jpg"){
                         continue
                     }
                     val currentNews = News(
                         currentJsonObject.getString("title"),
-                        currentJsonObject.getString("source_id"),
-                        currentJsonObject.getString("link"),
-                        currentJsonObject.getString("image_url")
-                    )
+                        currentJsonObject.getString("author"),
+                        currentJsonObject.getString("url"),
+                        currentJsonObject.getString("urlToImage")
 
+                    )
                     newsArray.add(currentNews)
                 }
                 madapter.updateItems(newsArray)

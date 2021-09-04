@@ -23,7 +23,12 @@ class NewsAdapter(private val listener : NewsItemClicked) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentItem = items[position]            //current item is of type News
         holder.titleView.text = currentItem.title
-        Glide.with(holder.itemView.context).load(currentItem.imageUrl).into(holder.imageView)
+        if(currentItem.imageUrl != "null"){
+            Glide.with(holder.itemView.context).load(currentItem.imageUrl).into(holder.imageView)
+        }
+        else
+        Glide.with(holder.itemView.context).load(R.drawable.imagenotfound).into(holder.imageView)
+
         if(currentItem.author != "null")
         holder.authorView.text=currentItem.author
 

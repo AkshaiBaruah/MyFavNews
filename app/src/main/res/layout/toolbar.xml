@@ -8,11 +8,11 @@
     app:title="News Reader">
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_bar"
+        android:id="@+id/search_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:paddingEnd="16dp"
+        android:paddingEnd="12dp"
         app:queryHint="Search related news..." />
 
 
