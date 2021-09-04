@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
             getNews(category)
         }
         healthBtn.setOnClickListener {
-            category = "general"
+            category = "health"
             scienceBtn.isChecked = false
             technologyBtn.isChecked = false
             entertainmentBtn.isChecked = false
